@@ -1,0 +1,25 @@
+{
+   "name": "myflix-client",
+   "version": "1.0.0",
+   "description": "",
+   "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1"
+   },
+   "repository": {
+      "type": "git",
+      "url": "git+https://github.com/ChrisDOE7/myFlix-client.git"
+   },
+   "author": "ChrisDOE",
+   "license": "ISC",
+   "bugs": {
+      "url": "https://github.com/ChrisDOE7/myFlix-client/issues"
+   },
+   "homepage": "https://github.com/ChrisDOE7/myFlix-client#readme",
+   "dependencies": {
+      "react": "^18.2.0",
+      "react-dom": "^18.2.0"
+   },
+   "devDependencies": {
+      "@parcel/transformer-sass": "^2.8.3"
+   }
+}
