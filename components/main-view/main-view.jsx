@@ -8,10 +8,10 @@ export const MainView = () => {
    const [selectedMovie, setSelectedMovie] = useState(null);
 
    useEffect(() => {
-      fetch("https://openlibrary.org/search.json?q=star+wars")
+      fetch("https://openlibrary.org/search.json?q=harry+potter")
          .then(response => response.json())
          .then(data => {
-            console.log("books from api:", data);
+            console.log("movies from api:", data);
          });
    }, []);
 
