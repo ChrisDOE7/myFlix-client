@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { MovieCard } from "../movie-card/movie-card";
 import { MovieView } from "../movie-view/movie-view";
 
@@ -9,9 +9,18 @@ export const MainView = () => {
 
    useEffect(() => {
       fetch("https://openlibrary.org/search.json?q=harry+potter")
-         .then(response => response.json())
-         .then(data => {
+         .then((response) => response.json())
+         .then((data) => {
             console.log("movies from api:", data);
+            const moviesApi = data.docs.map((doc) => {
+               return {
+                  id: doc.key,
+                  title: doc.title,
+                  image: `https://covers.openlibrary.org/b/id/${doc.cover_i}-L.jpg`,
+                  author: doc.author_name?.[0],
+               };
+            });
+            setMovies(moviesApi);
          });
    }, []);
 
@@ -30,11 +39,11 @@ export const MainView = () => {
 
    return (
       <div>
-         {movies.map(movie => (
+         {movies.map((movie) => (
             <MovieCard
                key={movie.id}
                movie={movie}
-               onMovieClick={newSelectedMovie => {
+               onMovieClick={(newSelectedMovie) => {
                   setSelectedMovie(newSelectedMovie);
                }}
             />
