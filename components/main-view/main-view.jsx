@@ -4,47 +4,84 @@ import { MovieView } from "../movie-view/movie-view";
 import { LoginView } from "../login-view/login-view";
 
 export const MainView = () => {
+   const storedUser = JSON.parse(localStorage.getItem("user"));
+   const storedToken = localStorage.getItem("token");
+   const [user, setUser] = useState(storedUser ? storedUser : null);
+   const [token, setToken] = useState(storedToken ? storedToken : null);
    const [movies, setMovies] = useState([]);
    const [selectedMovie, setSelectedMovie] = useState(null);
-   const [user, setUser] = useState(null);
-   const [password, setPassword] = useState(null);
 
    useEffect(() => {
-      fetch("https://openlibrary.org/search.json?q=harry+potter")
+      if (!token) return;
+
+      fetch("https://openlibrary.org/account/login.json", {
+         headers: { Authorization: `Bearer ${token}` },
+      })
          .then((response) => response.json())
-         .then((data) => {
-            console.log("movies from api:", data);
-            const moviesApi = data.docs.map((doc) => {
-               return {
-                  id: doc.key,
-                  title: doc.title,
-                  image: `https://covers.openlibrary.org/b/id/${doc.cover_i}-L.jpg`,
-                  author: doc.author_name?.[0],
-               };
-            });
-            setMovies(moviesApi);
+         .then((movies) => {
+            setMovies(movies);
          });
-   }, []);
+   }, [token]);
 
    if (!user) {
-      return <LoginView />;
-   }
-
-   if (selectedMovie) {
       return (
-         <MovieView
-            movie={selectedMovie}
-            onBackClick={() => setSelectedMovie(null)}
+         <LoginView
+            onLoggedIn={(user, token) => {
+               setUser(user);
+               setToken(token);
+            }}
          />
       );
    }
 
+   if (selectedMovie) {
+      return (
+         <>
+            <button
+               onClick={() => {
+                  setUser(null);
+                  setToken(null);
+                  localStorage.clear();
+               }}
+            >
+               Logout
+            </button>
+            <MovieView
+               movie={selectedMovie}
+               onBackClick={() => setSelectedMovie(null)}
+            />
+         </>
+      );
+   }
+
    if (movies.length === 0) {
-      return <div>The list is empty!</div>;
+      return (
+         <>
+            <button
+               onClick={() => {
+                  setUser(null);
+                  setToken(null);
+                  localStorage.clear();
+               }}
+            >
+               Logout
+            </button>
+            <div>The list is empty!</div>
+         </>
+      );
    }
 
    return (
       <div>
+         <button
+            onClick={() => {
+               setUser(null);
+               setToken(null);
+               localStorage.clear();
+            }}
+         >
+            Logout
+         </button>
          {movies.map((movie) => (
             <MovieCard
                key={movie.id}
@@ -56,11 +93,4 @@ export const MainView = () => {
          ))}
       </div>
    );
-   <button
-      onClick={() => {
-         setUser(null);
-      }}
-   >
-      Logout
-   </button>;
 };
