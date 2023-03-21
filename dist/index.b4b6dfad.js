@@ -27303,11 +27303,14 @@ var _jsxDevRuntime = require("react/jsx-dev-runtime");
 var _react = require("react");
 var _movieCard = require("../movie-card/movie-card");
 var _movieView = require("../movie-view/movie-view");
+var _loginView = require("../login-view/login-view");
 var _s = $RefreshSig$();
 const MainView = ()=>{
     _s();
     const [movies, setMovies] = (0, _react.useState)([]);
     const [selectedMovie, setSelectedMovie] = (0, _react.useState)(null);
+    const [user, setUser] = (0, _react.useState)(null);
+    const [password, setPassword] = (0, _react.useState)(null);
     (0, _react.useEffect)(()=>{
         fetch("https://openlibrary.org/search.json?q=harry+potter").then((response)=>response.json()).then((data)=>{
             console.log("movies from api:", data);
@@ -27322,19 +27325,24 @@ const MainView = ()=>{
             setMovies(moviesApi);
         });
     }, []);
+    if (!user) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _loginView.LoginView), {}, void 0, false, {
+        fileName: "components/main-view/main-view.jsx",
+        lineNumber: 30,
+        columnNumber: 14
+    }, undefined);
     if (selectedMovie) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _movieView.MovieView), {
         movie: selectedMovie,
         onBackClick: ()=>setSelectedMovie(null)
     }, void 0, false, {
         fileName: "components/main-view/main-view.jsx",
-        lineNumber: 29,
+        lineNumber: 35,
         columnNumber: 10
     }, undefined);
     if (movies.length === 0) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
         children: "The list is empty!"
     }, void 0, false, {
         fileName: "components/main-view/main-view.jsx",
-        lineNumber: 37,
+        lineNumber: 43,
         columnNumber: 14
     }, undefined);
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -27345,16 +27353,16 @@ const MainView = ()=>{
                 }
             }, movie.id, false, {
                 fileName: "components/main-view/main-view.jsx",
-                lineNumber: 43,
+                lineNumber: 49,
                 columnNumber: 13
             }, undefined))
     }, void 0, false, {
         fileName: "components/main-view/main-view.jsx",
-        lineNumber: 41,
+        lineNumber: 47,
         columnNumber: 7
     }, undefined);
 };
-_s(MainView, "PO+XgOji7E32nFJj3H5UPLPJ7w4=");
+_s(MainView, "XEGrMlkzvrB9U6b+dGkILQYhUxU=");
 _c = MainView;
 var _c;
 $RefreshReg$(_c, "MainView");
@@ -27364,7 +27372,7 @@ $RefreshReg$(_c, "MainView");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","../movie-card/movie-card":"8z54c","../movie-view/movie-view":"lNY7v","@parcel/transformer-js/src/esmodule-helpers.js":"h0jg5","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"1EGMS"}],"8z54c":[function(require,module,exports) {
+},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","../movie-card/movie-card":"8z54c","../movie-view/movie-view":"lNY7v","@parcel/transformer-js/src/esmodule-helpers.js":"h0jg5","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"1EGMS","../login-view/login-view":"82yVY"}],"8z54c":[function(require,module,exports) {
 var $parcel$ReactRefreshHelpers$42ca = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
 var prevRefreshSig = window.$RefreshSig$;
@@ -27380,8 +27388,11 @@ const MovieCard = ({ movie , onMovieClick  })=>{
         onClick: ()=>{
             onMovieClick(movie);
         },
-        children: movie.title
-    }, void 0, false, {
+        children: [
+            movie.title,
+            movie.genre
+        ]
+    }, void 0, true, {
         fileName: "components/movie-card/movie-card.jsx",
         lineNumber: 3,
         columnNumber: 7
@@ -27565,6 +27576,103 @@ $RefreshReg$(_c, "MovieView");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","@parcel/transformer-js/src/esmodule-helpers.js":"h0jg5","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"1EGMS"}]},["KxQvs","e3RXu","d8Dch"], "d8Dch", "parcelRequireaec4")
+},{"react/jsx-dev-runtime":"iTorj","@parcel/transformer-js/src/esmodule-helpers.js":"h0jg5","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"1EGMS"}],"82yVY":[function(require,module,exports) {
+var $parcel$ReactRefreshHelpers$cb9c = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+$parcel$ReactRefreshHelpers$cb9c.prelude(module);
+
+try {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "LoginView", ()=>LoginView);
+var _jsxDevRuntime = require("react/jsx-dev-runtime");
+var _react = require("react");
+var _reactDefault = parcelHelpers.interopDefault(_react);
+var _s = $RefreshSig$();
+const LoginView = ()=>{
+    _s();
+    const [username, setUsername] = (0, _react.useState)("");
+    const [password, setPassword] = (0, _react.useState)("");
+    const handleSubmit = (event)=>{
+        // this prevents the default behavior of the form which is to reload the entire page
+        event.preventDefault();
+        const data = {
+            access: username,
+            secret: password
+        };
+        fetch("https://openlibrary.org/account/login.json", {
+            method: "POST",
+            body: JSON.stringify(data)
+        });
+    };
+    return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("form", {
+        onSubmit: handleSubmit,
+        children: [
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("label", {
+                children: [
+                    "Username:",
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {
+                        type: "text",
+                        value: username,
+                        onChange: (e)=>setUsername(e.target.value),
+                        required: true
+                    }, void 0, false, {
+                        fileName: "components/login-view/login-view.jsx",
+                        lineNumber: 26,
+                        columnNumber: 13
+                    }, undefined)
+                ]
+            }, void 0, true, {
+                fileName: "components/login-view/login-view.jsx",
+                lineNumber: 24,
+                columnNumber: 10
+            }, undefined),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("label", {
+                children: [
+                    "Password:",
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {
+                        type: "password",
+                        value: password,
+                        onChange: (e)=>setPassword(e.target.value),
+                        required: true,
+                        minLength: 5
+                    }, void 0, false, {
+                        fileName: "components/login-view/login-view.jsx",
+                        lineNumber: 35,
+                        columnNumber: 13
+                    }, undefined)
+                ]
+            }, void 0, true, {
+                fileName: "components/login-view/login-view.jsx",
+                lineNumber: 33,
+                columnNumber: 10
+            }, undefined),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
+                type: "submit",
+                children: "Submit"
+            }, void 0, false, {
+                fileName: "components/login-view/login-view.jsx",
+                lineNumber: 43,
+                columnNumber: 10
+            }, undefined)
+        ]
+    }, void 0, true, {
+        fileName: "components/login-view/login-view.jsx",
+        lineNumber: 23,
+        columnNumber: 7
+    }, undefined);
+};
+_s(LoginView, "Lrw7JeD9zj6OUWhT/IH4OIvPKEk=");
+_c = LoginView;
+var _c;
+$RefreshReg$(_c, "LoginView");
+
+  $parcel$ReactRefreshHelpers$cb9c.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+},{"react/jsx-dev-runtime":"iTorj","@parcel/transformer-js/src/esmodule-helpers.js":"h0jg5","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"1EGMS","react":"21dqq"}]},["KxQvs","e3RXu","d8Dch"], "d8Dch", "parcelRequireaec4")
 
 //# sourceMappingURL=index.b4b6dfad.js.map
