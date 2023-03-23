@@ -5,24 +5,24 @@ export const LoginView = ({ onLoggedIn }) => {
    const [username, setUsername] = useState("");
    const [password, setPassword] = useState("");
 
-   const handleSubmit = (event) => {
+   const handleSubmit = event => {
       // this prevents the default behavior of the form which is to reload the entire page
       event.preventDefault();
 
       const data = {
          Username: username,
-         Password: password,
+         Password: password
       };
 
-      fetch("YOUR_API_URL/login", {
+      fetch("https://myflixapp2211.herokuapp.com/login", {
          method: "POST",
          headers: {
-            "Content-Type": "application/json",
+            "Content-Type": "application/json"
          },
-         body: JSON.stringify(data),
+         body: JSON.stringify(data)
       })
-         .then((response) => response.json())
-         .then((data) => {
+         .then(response => response.json())
+         .then(data => {
             console.log("Login response: ", data);
             if (data.user) {
                localStorage.setItem("user", JSON.stringify(data.user));
@@ -32,19 +32,20 @@ export const LoginView = ({ onLoggedIn }) => {
                alert("No such user");
             }
          })
-         .catch((e) => {
+         .catch(e => {
             alert("Something went wrong");
          });
    };
 
    return (
       <form onSubmit={handleSubmit}>
+         <label>Login:</label> <br></br>
          <label>
             Username:
             <input
                type="text"
                value={username}
-               onChange={(e) => setUsername(e.target.value)}
+               onChange={e => setUsername(e.target.value)}
             />
          </label>
          <label>
@@ -52,7 +53,7 @@ export const LoginView = ({ onLoggedIn }) => {
             <input
                type="password"
                value={password}
-               onChange={(e) => setPassword(e.target.value)}
+               onChange={e => setPassword(e.target.value)}
             />
          </label>
          <button type="submit">Submit</button>

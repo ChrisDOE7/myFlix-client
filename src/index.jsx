@@ -8,7 +8,6 @@ import { MainView } from "../components/main-view/main-view";
 const MyFlixApplication = () => {
    return (
       <div className="my-flix">
-         <div>Good morning</div>
          <MainView></MainView>
       </div>
    );
