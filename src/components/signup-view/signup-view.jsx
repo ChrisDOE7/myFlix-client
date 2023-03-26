@@ -10,7 +10,7 @@ export const SignupView = () => {
    const [email, setEmail] = useState("");
    const [birthday, setBirthday] = useState("");
 
-   const handleSubmit = event => {
+   const handleSubmit = (event) => {
       event.preventDefault();
 
       const data = {
@@ -18,16 +18,16 @@ export const SignupView = () => {
          Username: username,
          Password: password,
          Email: email,
-         Birthday: birthday
+         Birthday: birthday,
       };
 
       fetch("https://myflixapp2211.herokuapp.com/users", {
          method: "POST",
          body: JSON.stringify(data),
          headers: {
-            "Content-Type": "application/json"
-         }
-      }).then(response => {
+            "Content-Type": "application/json",
+         },
+      }).then((response) => {
          if (response.ok) {
             alert("Signup successful");
             window.location.reload();
@@ -44,7 +44,7 @@ export const SignupView = () => {
             <FormControl
                type="text"
                value={username}
-               onChange={e => setUsername(e.target.value)}
+               onChange={(e) => setUsername(e.target.value)}
                required
                minLength="3"
             />
@@ -55,7 +55,7 @@ export const SignupView = () => {
             <Form.Control
                type="password"
                value={password}
-               onChange={e => setPassword(e.target.value)}
+               onChange={(e) => setPassword(e.target.value)}
                required
                minLength="8"
             />
@@ -66,7 +66,7 @@ export const SignupView = () => {
             <Form.Control
                type="email"
                value={email}
-               onChange={e => setEmail(e.target.value)}
+               onChange={(e) => setEmail(e.target.value)}
                required
             />
          </Form.Group>
@@ -77,12 +77,12 @@ export const SignupView = () => {
                placeholder="name@example.com"
                type="date"
                value={birthday}
-               onChange={e => setBirthday(e.target.value)}
+               onChange={(e) => setBirthday(e.target.value)}
                required
             />
          </Form.Group>
          <br></br>
-         <Button variant="success" type="submit">
+         <Button variant="primary" type="submit">
             Sign Up
          </Button>
       </Form>
