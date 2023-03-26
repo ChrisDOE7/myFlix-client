@@ -3,6 +3,10 @@ import { MovieCard } from "../movie-card/movie-card";
 import { MovieView } from "../movie-view/movie-view";
 import { LoginView } from "../login-view/login-view";
 import { SignupView } from "../Signup-view/signup-view";
+import Container from "react-bootstrap/Container";
+import Col from "react-bootstrap/Row";
+import Button from "react-bootstrap/Button";
+import "./main-view.scss";
 
 export const MainView = () => {
    const storedUser = JSON.parse(localStorage.getItem("user"));
@@ -28,7 +32,7 @@ export const MainView = () => {
                   id: movie._id,
                   title: movie.Title,
                   image: movie.ImagePath,
-                  story: movie.Story,
+                  description: movie.Description,
                   genre: movie.Genre.Name,
                   director: movie.Director.Name,
                   year: movie.Year
@@ -41,14 +45,21 @@ export const MainView = () => {
    if (!user) {
       return (
          <>
-            <LoginView
-               onLoggedIn={(user, token) => {
-                  setUser(user);
-                  setToken(token);
-               }}
-            />
-            or
-            <SignupView />
+            <Container>
+               <Col className="justify-content-md-center">
+                  <Col xs lg="3" style={{ border: "1px solid red" }}>
+                     <LoginView
+                        onLoggedIn={(user, token) => {
+                           setUser(user);
+                           setToken(token);
+                        }}
+                     />
+                  </Col>
+                  <Col xs lg="3" style={{ border: "1px solid red" }}>
+                     <SignupView />
+                  </Col>
+               </Col>
+            </Container>
          </>
       );
    }
@@ -56,7 +67,8 @@ export const MainView = () => {
    if (selectedMovie) {
       return (
          <>
-            <button
+            <Button
+               variant="secondary"
                onClick={() => {
                   setUser(null);
                   setToken(null);
@@ -64,11 +76,13 @@ export const MainView = () => {
                }}
             >
                Logout
-            </button>
-            <MovieView
-               movie={selectedMovie}
-               onBackClick={() => setSelectedMovie(null)}
-            />
+            </Button>
+            <Col md={8}>
+               <MovieView
+                  movie={selectedMovie}
+                  onBackClick={() => setSelectedMovie(null)}
+               />
+            </Col>
          </>
       );
    }
@@ -76,7 +90,8 @@ export const MainView = () => {
    if (movies.length === 0) {
       return (
          <>
-            <button
+            <Button
+               variant="secondary"
                onClick={() => {
                   setUser(null);
                   setToken(null);
@@ -84,7 +99,7 @@ export const MainView = () => {
                }}
             >
                Logout
-            </button>
+            </Button>
             <div>The list is empty!</div>
          </>
       );
@@ -92,7 +107,8 @@ export const MainView = () => {
 
    return (
       <div>
-         <button
+         <Button
+            variant="secondary"
             onClick={() => {
                setUser(null);
                setToken(null);
@@ -100,7 +116,7 @@ export const MainView = () => {
             }}
          >
             Logout
-         </button>
+         </Button>
          {movies.map(movie => (
             <MovieCard
                key={movie.id}
