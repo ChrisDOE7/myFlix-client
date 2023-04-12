@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { MovieCard } from "../movie-card/movie-card";
 import { MovieView } from "../movie-view/movie-view";
 import { LoginView } from "../login-view/login-view";
+import { ProfileView } from "../profile-view/profile-view";
 import { SignupView } from "../signup-view/signup-view";
 import { NavigationBar } from "../navigation-bars/navigation-bar";
 
@@ -16,6 +17,11 @@ export const MainView = () => {
    const [user, setUser] = useState(storedUser ? storedUser : null);
    const [token, setToken] = useState(storedToken ? storedToken : null);
    const [movies, setMovies] = useState([]);
+
+   const updateUser = user => {
+      setUser(user);
+      localStorage.setItem("user", JSON.stringify(user));
+   };
 
    useEffect(() => {
       if (!token) return;
@@ -87,6 +93,26 @@ export const MainView = () => {
                   }
                />
                <Route
+                  path="/profile"
+                  element={
+                     !user ? (
+                        <Navigate to="/login" replace />
+                     ) : (
+                        <ProfileView
+                           user={user}
+                           token={token}
+                           movies={movies}
+                           onLoggedOut={() => {
+                              setUser(null);
+                              setToken(null);
+                              localStorage.clear();
+                           }}
+                           updateUser={updateUser}
+                        />
+                     )
+                  }
+               />
+               <Route
                   path="/movies/:movieId"
                   element={
                      <>
@@ -102,7 +128,6 @@ export const MainView = () => {
                      </>
                   }
                />
-
                <Route
                   path="/"
                   element={
