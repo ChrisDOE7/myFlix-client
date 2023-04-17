@@ -43520,6 +43520,8 @@ const EditProfile = ({ user  })=>{
     const [password, setPassword] = (0, _react.useState)("");
     const [email, setEmail] = (0, _react.useState)("");
     const [birthday, setBirthday] = (0, _react.useState)("");
+    const storedToken = localStorage.getItem("token");
+    const [token, setToken] = (0, _react.useState)(storedToken ? storedToken : null);
     const [isLoading, setIsLoading] = (0, _react.useState)(false);
     const [error, setError] = (0, _react.useState)(null);
     const handleSubmit = async (event)=>{
@@ -43535,6 +43537,10 @@ const EditProfile = ({ user  })=>{
         };
         try {
             const response = await fetch(`https://myflixapp2211.herokuapp.com/users/${user.Username}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }, {
                 method: "PUT",
                 body: JSON.stringify(data),
                 headers: {
@@ -43554,14 +43560,6 @@ const EditProfile = ({ user  })=>{
         className: "w-50",
         onSubmit: handleSubmit,
         children: [
-            error && /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-                className: "error",
-                children: error
-            }, void 0, false, {
-                fileName: "src/components/profile-view/edit-profile.jsx",
-                lineNumber: 56,
-                columnNumber: 20
-            }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Form).Group, {
                 controlId: "Name",
                 children: [
@@ -43569,7 +43567,7 @@ const EditProfile = ({ user  })=>{
                         children: "Name:"
                     }, void 0, false, {
                         fileName: "src/components/profile-view/edit-profile.jsx",
-                        lineNumber: 58,
+                        lineNumber: 62,
                         columnNumber: 13
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.FormControl), {
@@ -43578,13 +43576,13 @@ const EditProfile = ({ user  })=>{
                         onChange: (e)=>setName(e.target.value)
                     }, void 0, false, {
                         fileName: "src/components/profile-view/edit-profile.jsx",
-                        lineNumber: 59,
+                        lineNumber: 63,
                         columnNumber: 13
                     }, undefined)
                 ]
             }, void 0, true, {
                 fileName: "src/components/profile-view/edit-profile.jsx",
-                lineNumber: 57,
+                lineNumber: 61,
                 columnNumber: 10
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Form).Group, {
@@ -43594,7 +43592,7 @@ const EditProfile = ({ user  })=>{
                         children: "Username:"
                     }, void 0, false, {
                         fileName: "src/components/profile-view/edit-profile.jsx",
-                        lineNumber: 66,
+                        lineNumber: 70,
                         columnNumber: 13
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.FormControl), {
@@ -43603,13 +43601,13 @@ const EditProfile = ({ user  })=>{
                         onChange: (e)=>setUsername(e.target.value)
                     }, void 0, false, {
                         fileName: "src/components/profile-view/edit-profile.jsx",
-                        lineNumber: 67,
+                        lineNumber: 71,
                         columnNumber: 13
                     }, undefined)
                 ]
             }, void 0, true, {
                 fileName: "src/components/profile-view/edit-profile.jsx",
-                lineNumber: 65,
+                lineNumber: 69,
                 columnNumber: 10
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Form).Group, {
@@ -43619,7 +43617,7 @@ const EditProfile = ({ user  })=>{
                         children: "Password:"
                     }, void 0, false, {
                         fileName: "src/components/profile-view/edit-profile.jsx",
-                        lineNumber: 75,
+                        lineNumber: 79,
                         columnNumber: 13
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Form).Control, {
@@ -43628,13 +43626,13 @@ const EditProfile = ({ user  })=>{
                         onChange: (e)=>setPassword(e.target.value)
                     }, void 0, false, {
                         fileName: "src/components/profile-view/edit-profile.jsx",
-                        lineNumber: 76,
+                        lineNumber: 80,
                         columnNumber: 13
                     }, undefined)
                 ]
             }, void 0, true, {
                 fileName: "src/components/profile-view/edit-profile.jsx",
-                lineNumber: 74,
+                lineNumber: 78,
                 columnNumber: 10
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Form).Group, {
@@ -43644,7 +43642,7 @@ const EditProfile = ({ user  })=>{
                         children: "Email::"
                     }, void 0, false, {
                         fileName: "src/components/profile-view/edit-profile.jsx",
-                        lineNumber: 84,
+                        lineNumber: 88,
                         columnNumber: 13
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Form).Control, {
@@ -43654,13 +43652,13 @@ const EditProfile = ({ user  })=>{
                         onChange: (e)=>setEmail(e.target.value)
                     }, void 0, false, {
                         fileName: "src/components/profile-view/edit-profile.jsx",
-                        lineNumber: 85,
+                        lineNumber: 89,
                         columnNumber: 13
                     }, undefined)
                 ]
             }, void 0, true, {
                 fileName: "src/components/profile-view/edit-profile.jsx",
-                lineNumber: 83,
+                lineNumber: 87,
                 columnNumber: 10
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Form).Group, {
@@ -43670,7 +43668,7 @@ const EditProfile = ({ user  })=>{
                         children: "Birthday:"
                     }, void 0, false, {
                         fileName: "src/components/profile-view/edit-profile.jsx",
-                        lineNumber: 94,
+                        lineNumber: 98,
                         columnNumber: 13
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Form).Control, {
@@ -43679,19 +43677,27 @@ const EditProfile = ({ user  })=>{
                         onChange: (e)=>setBirthday(e.target.value)
                     }, void 0, false, {
                         fileName: "src/components/profile-view/edit-profile.jsx",
-                        lineNumber: 95,
+                        lineNumber: 99,
                         columnNumber: 13
                     }, undefined)
                 ]
             }, void 0, true, {
                 fileName: "src/components/profile-view/edit-profile.jsx",
-                lineNumber: 93,
+                lineNumber: 97,
                 columnNumber: 10
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("br", {}, void 0, false, {
                 fileName: "src/components/profile-view/edit-profile.jsx",
-                lineNumber: 101,
+                lineNumber: 105,
                 columnNumber: 10
+            }, undefined),
+            error && /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                className: "error",
+                children: error
+            }, void 0, false, {
+                fileName: "src/components/profile-view/edit-profile.jsx",
+                lineNumber: 106,
+                columnNumber: 20
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _buttonDefault.default), {
                 variant: "primary",
@@ -43700,17 +43706,17 @@ const EditProfile = ({ user  })=>{
                 children: isLoading ? "Updating..." : "Update"
             }, void 0, false, {
                 fileName: "src/components/profile-view/edit-profile.jsx",
-                lineNumber: 102,
+                lineNumber: 107,
                 columnNumber: 10
             }, undefined)
         ]
     }, void 0, true, {
         fileName: "src/components/profile-view/edit-profile.jsx",
-        lineNumber: 55,
+        lineNumber: 60,
         columnNumber: 7
     }, undefined);
 };
-_s(EditProfile, "CjdYIzl0TSrokFD984F3MEsnGeY=");
+_s(EditProfile, "fRifX0BEk/alTqZLriVZL3Atib8=");
 _c = EditProfile;
 var _c;
 $RefreshReg$(_c, "EditProfile");

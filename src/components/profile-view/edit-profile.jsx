@@ -9,6 +9,8 @@ export const EditProfile = ({ user }) => {
    const [password, setPassword] = useState("");
    const [email, setEmail] = useState("");
    const [birthday, setBirthday] = useState("");
+   const storedToken = localStorage.getItem("token");
+   const [token, setToken] = useState(storedToken ? storedToken : null);
    const [isLoading, setIsLoading] = useState(false);
    const [error, setError] = useState(null);
 
@@ -29,6 +31,9 @@ export const EditProfile = ({ user }) => {
       try {
          const response = await fetch(
             `https://myflixapp2211.herokuapp.com/users/${user.Username}`,
+            {
+               headers: { Authorization: `Bearer ${token}` }
+            },
             {
                method: "PUT",
                body: JSON.stringify(data),
@@ -53,7 +58,6 @@ export const EditProfile = ({ user }) => {
 
    return (
       <Form className="w-50" onSubmit={handleSubmit}>
-         {error && <div className="error">{error}</div>}
          <Form.Group controlId="Name">
             <Form.Label>Name:</Form.Label>
             <FormControl
@@ -99,6 +103,7 @@ export const EditProfile = ({ user }) => {
             />
          </Form.Group>
          <br></br>
+         {error && <div className="error">{error}</div>}
          <Button variant="primary" type="submit" disabled={isLoading}>
             {isLoading ? "Updating..." : "Update"}
          </Button>
